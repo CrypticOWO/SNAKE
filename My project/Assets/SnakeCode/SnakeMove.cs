@@ -70,5 +70,9 @@ public class SnakeMove : MonoBehaviour
         {
             Grow();
         }
+        else if (other.tag == "Wall")
+        {
+            Debug.Log("Hit");
+        }
     }
 }
