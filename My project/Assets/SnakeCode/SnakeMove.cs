@@ -1,11 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SnakeMove : MonoBehaviour
 {
     //Variables
     private Vector2 direction; //control dirction of movement
+    public bool goingUp;
+    public bool goingDown;
+    public bool goingLeft;
+    public bool goingRight;
 
     List<Transform> segments; //variable to store all the parts of the snake body
     public Transform bodyPrefab;//variable to store the body
@@ -21,21 +26,37 @@ public class SnakeMove : MonoBehaviour
     void Update()
     {
         //Change direction of snake
-        if (Input.GetKeyDown(KeyCode.W))    //When W is pressed
+        if (Input.GetKeyDown(KeyCode.W) && goingDown != true)    //When W is pressed
         {
             direction = Vector2.up;          //Go Up
+            goingUp = true;
+            goingDown = false;
+            goingLeft = false;
+            goingRight = false;
         }
-        if (Input.GetKeyDown(KeyCode.A))    //When A is pressed
+        else if (Input.GetKeyDown(KeyCode.A))    //When A is pressed
         {
             direction = Vector2.left;          //Go Left
+            goingUp = false;
+            goingDown = false;
+            goingLeft = true;
+            goingRight = false;
         }
-        if (Input.GetKeyDown(KeyCode.S))    //When S is pressed
+        else if (Input.GetKeyDown(KeyCode.S) && goingUp != true)    //When S is pressed
         {
             direction = Vector2.down;          //Go Down
+            goingUp = false;
+            goingDown = true;
+            goingLeft = false;
+            goingRight = false;
         }
-        if (Input.GetKeyDown(KeyCode.D))    //When D is pressed
+        else if (Input.GetKeyDown(KeyCode.D))    //When D is pressed
         {
             direction = Vector2.right;          //Go Right
+            goingUp = false;
+            goingDown = false;
+            goingLeft = false;
+            goingRight = true;
         }
     }
 
@@ -72,7 +93,7 @@ public class SnakeMove : MonoBehaviour
         }
         else if (other.tag == "Wall")
         {
-            Debug.Log("Hit");
+            SceneManager.LoadScene("EndScene"); //changes to the end scene when hitting obstacle
         }
     }
 }
